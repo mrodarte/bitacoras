@@ -84,7 +84,7 @@ angular.module('appTareas', ['ui.router'])
             comun.tareas[indice] = $scope.tarea;
             $state.go('alta');
         }
-        
+
         $scope.eliminar = function(){
             comun.eliminar($scope.tarea);
             $state.go('alta');
