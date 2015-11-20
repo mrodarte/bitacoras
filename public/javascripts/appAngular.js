@@ -21,9 +21,12 @@ angular.module('appTareas', ['ui.router'])
 
         comun.tarea = {};
 
-        comun.eliminar = function(tarea) {
-            var indice = comun.tareas.indexOf(tarea);
-            comun.tareas.splice(indice, 1);
+        comun.eliminar = function(tarea){
+            return $http.delete('/tarea/' + tarea._id)
+            .success(function(){
+                var indice = comun.tareas.indexOf(tarea);
+                comun.tareas.splice(indice, 1);
+            })
         }
 
         /***Sección de métodos remotos***/
