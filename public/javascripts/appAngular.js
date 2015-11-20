@@ -36,6 +36,22 @@ angular.module('appTareas', ['ui.router'])
             })
         }
 
+        comun.add = function(tarea){
+            return $http.post('/tarea', tarea)
+            .success(function(tarea){
+                comun.tareas.push(tarea);
+            })
+        }
+
+        comun.update = function(tarea){
+            return $http.put('/tarea/' + tarea._id, tarea)
+            .success(function(data){
+                var indice = comun.tareas.indexOf(tarea);
+                comun.tareas[indice] = data;
+            })
+        }
+
+
         return comun;
     })
     .controller('ctrlAlta', function($scope, $state, comun) {
@@ -49,7 +65,7 @@ angular.module('appTareas', ['ui.router'])
         $scope.prioridades = ['Baja', 'Normal', 'Alta'];
 
         $scope.agregar = function() {
-            $scope.tareas.push({
+            comun.add({
                 nombre: $scope.tarea.nombre,
                 prioridad: parseInt($scope.tarea.prioridad)
             })
@@ -80,8 +96,7 @@ angular.module('appTareas', ['ui.router'])
         $scope.tarea = comun.tarea;
         
         $scope.actualizar = function() {
-            var indice = comun.tareas.indexOf(comun.tarea);
-            comun.tareas[indice] = $scope.tarea;
+            comun.update($scope.tarea);
             $state.go('alta');
         }
 
